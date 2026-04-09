@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รักเค้าไหม? 🥺</title>
+    <style>
+        /* จัดรูปแบบหน้าเว็บให้น่ารัก มินิมอล */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe6e6; /* พื้นหลังสีชมพูพาสเทล */
+            font-family: 'Prompt', sans-serif;
+            text-align: center;
+            margin: 0;
+            overflow: hidden; /* ป้องกันไม่ให้หน้าจอเลื่อนเวลาปุ่มใหญ่เกินไป */
+        }
+
+        h1 {
+            color: #ff4d4d;
+            margin-bottom: 20px;
+        }
+
+        img {
+            max-width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        button {
+            font-size: 1.2rem;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease; /* ทำให้การขยายปุ่มดูสมูท */
+        }
+
+        #yes-btn {
+            background-color: #ff4d4d;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(255, 77, 77, 0.3);
+        }
+
+        #yes-btn:hover {
+            background-color: #ff3333;
+        }
+
+        #no-btn {
+            background-color: #ffffff;
+            color: #555;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* ซ่อนหน้าตอนตอบตกลงไว้ก่อน */
+        #success-container {
+            display: none;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="question-container">
+        <img src="https://media.tenor.com/8gpiAXKK8nwAAAAM/cute-sad-bear-cute-sad.gif" alt="แมวอ้อน">
+        <h1>รักเค้าไหม? 🥺</h1>
+        
+        <div class="buttons">
+            <button id="yes-btn">รักเค้า ❤️</button>
+            <button id="no-btn">ไม่รักเค้า 💔</button>
+        </div>
+    </div>
+
+    <div id="success-container">
+        <img src="https://i.pinimg.com/originals/9a/6b/f8/9a6bf85d1fd88cf6eb2c976e7da69f1f.gif" alt="หมีกอดกัน">
+        <h1>เย้! รักเหมือนกันนะ จุ๊บๆ 😘❤️</h1>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const questionContainer = document.getElementById('question-container');
+        const successContainer = document.getElementById('success-container');
+
+        let yesScale = 1; // ขนาดเริ่มต้นของปุ่มรักเค้า
+        let noClickCount = 0; // ตัวนับว่ากดปุ่มไม่รักไปกี่ครั้ง
+
+        // ข้อความที่จะเปลี่ยนไปเรื่อยๆ เวลากดปุ่ม "ไม่รักเค้า"
+        const noTexts = [
+            "ไม่รักเค้า 💔", 
+            "แน่ใจนะ? 🥺", 
+            "คิดดูดีๆ อีกทีสิ 😢", 
+            "อย่ากดปุ่มนี้เลยนะ 😭", 
+            "ใจร้ายยยย 💔", 
+            "ยอมแล้ว กดรักเถอะนะ 🙏"
+        ];
+
+        // เมื่อกดปุ่ม "ไม่รักเค้า"
+        noBtn.addEventListener('click', () => {
+            yesScale += 0.6; // เพิ่มขนาดปุ่ม "รักเค้า"
+            yesBtn.style.transform = `scale(${yesScale})`;
+
+            noClickCount++;
+            
+            // เปลี่ยนข้อความปุ่มไม่รักให้อ้อนขึ้น
+            if (noClickCount < noTexts.length) {
+                noBtn.innerText = noTexts[noClickCount];
+            } else {
+                noBtn.innerText = noTexts[noTexts.length - 1]; // ค้างไว้ที่ข้อความสุดท้าย
+            }
+        });
+
+        // เมื่อกดปุ่ม "รักเค้า"
+        yesBtn.addEventListener('click', () => {
+            questionContainer.style.display = 'none'; // ซ่อนหน้าคำถาม
+            successContainer.style.display = 'block'; // แสดงหน้าดีใจ
+        });
+    </script>
+
+</body>
+</html>
